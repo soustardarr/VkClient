@@ -36,5 +36,5 @@ class AppCoordinator: BaseCoordinator {
             authorizationViewContollerCoordinator.start()
         }
     }
-
+    
 }

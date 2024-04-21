@@ -13,7 +13,6 @@ class ProfileView: UIView {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.backgroundColor = .white
-        tableView.backgroundColor = .lightGray
         return tableView
     }()
 
@@ -27,7 +26,7 @@ class ProfileView: UIView {
     }
     
     private func setup() {
-        backgroundColor = .lightGray
+        backgroundColor = .white
         addSubview(tableView)
         NSLayoutConstraint.activate([
 

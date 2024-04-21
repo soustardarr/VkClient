@@ -25,12 +25,24 @@
 		7C35E9942BD009D400461DE3 /* RealTimeDataBaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C35E9932BD009D400461DE3 /* RealTimeDataBaseManager.swift */; };
 		7C35E9962BD00B9D00461DE3 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C35E9952BD00B9D00461DE3 /* StorageManager.swift */; };
 		7C35E9982BD141FD00461DE3 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C35E9972BD141FD00461DE3 /* CoreDataManager.swift */; };
-		7C35E9B02BD1577D00461DE3 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C35E9AF2BD1577D00461DE3 /* User.swift */; };
-		7C35E9B32BD1592500461DE3 /* VkClient.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7C35E9B12BD1592500461DE3 /* VkClient.xcdatamodeld */; };
-		7C35E9BB2BD15BCC00461DE3 /* EntityUser+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C35E9B92BD15BCC00461DE3 /* EntityUser+CoreDataClass.swift */; };
-		7C35E9BC2BD15BCC00461DE3 /* EntityUser+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C35E9BA2BD15BCC00461DE3 /* EntityUser+CoreDataProperties.swift */; };
 		7C35E9C02BD17ED600461DE3 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C35E9BF2BD17ED600461DE3 /* HeaderView.swift */; };
 		7C35E9C22BD1854800461DE3 /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C35E9C12BD1854800461DE3 /* ProfileTableViewCell.swift */; };
+		7C35E9C62BD2C84600461DE3 /* VkClient.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7C35E9C42BD2C84600461DE3 /* VkClient.xcdatamodeld */; };
+		7C35E9D12BD2CB9B00461DE3 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C35E9D02BD2CB9B00461DE3 /* User.swift */; };
+		7C35E9D42BD2CBC300461DE3 /* EntityUser+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C35E9D22BD2CBC300461DE3 /* EntityUser+CoreDataClass.swift */; };
+		7C35E9D52BD2CBC300461DE3 /* EntityUser+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C35E9D32BD2CBC300461DE3 /* EntityUser+CoreDataProperties.swift */; };
+		7C35E9D72BD3FAEC00461DE3 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C35E9D62BD3FAEC00461DE3 /* ProfileViewModel.swift */; };
+		7C35E9DA2BD4113600461DE3 /* JGProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 7C35E9D92BD4113600461DE3 /* JGProgressHUD */; };
+		7C35E9DC2BD411B100461DE3 /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C35E9DB2BD411B100461DE3 /* FriendsView.swift */; };
+		7C35E9DE2BD411C400461DE3 /* FriendsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C35E9DD2BD411C400461DE3 /* FriendsViewModel.swift */; };
+		7C35E9E02BD417C700461DE3 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C35E9DF2BD417C700461DE3 /* Extensions.swift */; };
+		7C35E9E22BD4181800461DE3 /* FriendsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C35E9E12BD4181800461DE3 /* FriendsViewCell.swift */; };
+		7C35E9E42BD418A400461DE3 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C35E9E32BD418A400461DE3 /* Friend.swift */; };
+		7C35E9E82BD4462100461DE3 /* PeopleProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C35E9E72BD4462100461DE3 /* PeopleProfileController.swift */; };
+		7C35E9EA2BD4471400461DE3 /* PeopleProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C35E9E92BD4471400461DE3 /* PeopleProfileView.swift */; };
+		7C35E9EC2BD44E5400461DE3 /* PeopleProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C35E9EB2BD44E5400461DE3 /* PeopleProfileViewModel.swift */; };
+		7C35E9EF2BD45A2000461DE3 /* NewsFeedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C35E9EE2BD45A2000461DE3 /* NewsFeedTableView.swift */; };
+		7C35E9F12BD45A3900461DE3 /* NewsFeedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C35E9F02BD45A3900461DE3 /* NewsFeedTableViewCell.swift */; };
 		7CD1F4182BCFD41F005DD65A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD1F4172BCFD41F005DD65A /* AppDelegate.swift */; };
 		7CD1F41A2BCFD41F005DD65A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD1F4192BCFD41F005DD65A /* SceneDelegate.swift */; };
 		7CD1F41C2BCFD41F005DD65A /* NewsFeedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD1F41B2BCFD41F005DD65A /* NewsFeedController.swift */; };
@@ -78,12 +90,23 @@
 		7C35E9932BD009D400461DE3 /* RealTimeDataBaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealTimeDataBaseManager.swift; sourceTree = "<group>"; };
 		7C35E9952BD00B9D00461DE3 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		7C35E9972BD141FD00461DE3 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
-		7C35E9AF2BD1577D00461DE3 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		7C35E9B22BD1592500461DE3 /* VkClient.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VkClient.xcdatamodel; sourceTree = "<group>"; };
-		7C35E9B92BD15BCC00461DE3 /* EntityUser+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EntityUser+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		7C35E9BA2BD15BCC00461DE3 /* EntityUser+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EntityUser+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		7C35E9BF2BD17ED600461DE3 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		7C35E9C12BD1854800461DE3 /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
+		7C35E9C52BD2C84600461DE3 /* VkClient.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VkClient.xcdatamodel; sourceTree = "<group>"; };
+		7C35E9D02BD2CB9B00461DE3 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		7C35E9D22BD2CBC300461DE3 /* EntityUser+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EntityUser+CoreDataClass.swift"; sourceTree = "<group>"; };
+		7C35E9D32BD2CBC300461DE3 /* EntityUser+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EntityUser+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		7C35E9D62BD3FAEC00461DE3 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		7C35E9DB2BD411B100461DE3 /* FriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
+		7C35E9DD2BD411C400461DE3 /* FriendsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewModel.swift; sourceTree = "<group>"; };
+		7C35E9DF2BD417C700461DE3 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		7C35E9E12BD4181800461DE3 /* FriendsViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewCell.swift; sourceTree = "<group>"; };
+		7C35E9E32BD418A400461DE3 /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
+		7C35E9E72BD4462100461DE3 /* PeopleProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleProfileController.swift; sourceTree = "<group>"; };
+		7C35E9E92BD4471400461DE3 /* PeopleProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleProfileView.swift; sourceTree = "<group>"; };
+		7C35E9EB2BD44E5400461DE3 /* PeopleProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleProfileViewModel.swift; sourceTree = "<group>"; };
+		7C35E9EE2BD45A2000461DE3 /* NewsFeedTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeedTableView.swift; sourceTree = "<group>"; };
+		7C35E9F02BD45A3900461DE3 /* NewsFeedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeedTableViewCell.swift; sourceTree = "<group>"; };
 		7CD1F4142BCFD41F005DD65A /* VkClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VkClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CD1F4172BCFD41F005DD65A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7CD1F4192BCFD41F005DD65A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -110,6 +133,7 @@
 				7C35E97F2BCFF34F00461DE3 /* FirebaseStorage in Frameworks */,
 				7CD1F43B2BCFD64F005DD65A /* FirebaseAppCheck in Frameworks */,
 				7C35E9812BCFF35300461DE3 /* FirebaseDatabase in Frameworks */,
+				7C35E9DA2BD4113600461DE3 /* JGProgressHUD in Frameworks */,
 				7CD1F4392BCFD64F005DD65A /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -152,6 +176,45 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		7C35E9CF2BD2CB7A00461DE3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7C35E9D22BD2CBC300461DE3 /* EntityUser+CoreDataClass.swift */,
+				7C35E9D32BD2CBC300461DE3 /* EntityUser+CoreDataProperties.swift */,
+				7C35E9D02BD2CB9B00461DE3 /* User.swift */,
+				7C35E9E32BD418A400461DE3 /* Friend.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		7C35E9E52BD432AC00461DE3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7C35E9DB2BD411B100461DE3 /* FriendsView.swift */,
+				7C35E9E12BD4181800461DE3 /* FriendsViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7C35E9E62BD445E000461DE3 /* OtherUserScreen */ = {
+			isa = PBXGroup;
+			children = (
+				7C35E9E72BD4462100461DE3 /* PeopleProfileController.swift */,
+				7C35E9E92BD4471400461DE3 /* PeopleProfileView.swift */,
+				7C35E9EB2BD44E5400461DE3 /* PeopleProfileViewModel.swift */,
+			);
+			path = OtherUserScreen;
+			sourceTree = "<group>";
+		};
+		7C35E9ED2BD4599900461DE3 /* NewsFeedTableView */ = {
+			isa = PBXGroup;
+			children = (
+				7C35E9EE2BD45A2000461DE3 /* NewsFeedTableView.swift */,
+				7C35E9F02BD45A3900461DE3 /* NewsFeedTableViewCell.swift */,
+			);
+			path = NewsFeedTableView;
+			sourceTree = "<group>";
+		};
 		7CD1F40B2BCFD41F005DD65A = {
 			isa = PBXGroup;
 			children = (
@@ -184,11 +247,12 @@
 		7CD1F42E2BCFD42D005DD65A /* Supporting */ = {
 			isa = PBXGroup;
 			children = (
-				7C35E9B12BD1592500461DE3 /* VkClient.xcdatamodeld */,
 				7CD1F4232BCFD420005DD65A /* Assets.xcassets */,
 				7CD1F4252BCFD420005DD65A /* LaunchScreen.storyboard */,
 				7CD1F42F2BCFD5DC005DD65A /* GoogleService-Info.plist */,
 				7CD1F4282BCFD420005DD65A /* Info.plist */,
+				7C35E9C42BD2C84600461DE3 /* VkClient.xcdatamodeld */,
+				7C35E9DF2BD417C700461DE3 /* Extensions.swift */,
 			);
 			path = Supporting;
 			sourceTree = "<group>";
@@ -205,12 +269,14 @@
 		7CD1F43D2BCFD6F5005DD65A /* MVVM */ = {
 			isa = PBXGroup;
 			children = (
-				7CD1F44C2BCFDB90005DD65A /* Models */,
+				7C35E9CF2BD2CB7A00461DE3 /* Models */,
 				7C35E9842BCFF6AE00461DE3 /* TabBarController */,
 				7CD1F44B2BCFDAF4005DD65A /* AuthorizationScreen */,
 				7CD1F44A2BCFDADB005DD65A /* RegistrationScreen */,
+				7C35E9E62BD445E000461DE3 /* OtherUserScreen */,
 				7CD1F4492BCFDABE005DD65A /* ProfileScreen */,
 				7CD1F4482BCFDAAA005DD65A /* FriendsScreen */,
+				7C35E9ED2BD4599900461DE3 /* NewsFeedTableView */,
 				7CD1F4472BCFDA9A005DD65A /* NewsFeedScreen */,
 			);
 			path = MVVM;
@@ -238,6 +304,8 @@
 			isa = PBXGroup;
 			children = (
 				7CD1F43E2BCFD9F6005DD65A /* FriendsController.swift */,
+				7C35E9DD2BD411C400461DE3 /* FriendsViewModel.swift */,
+				7C35E9E52BD432AC00461DE3 /* Views */,
 			);
 			path = FriendsScreen;
 			sourceTree = "<group>";
@@ -246,6 +314,7 @@
 			isa = PBXGroup;
 			children = (
 				7CD1F4402BCFDA13005DD65A /* ProfileController.swift */,
+				7C35E9D62BD3FAEC00461DE3 /* ProfileViewModel.swift */,
 				7C35E9C32BD192FD00461DE3 /* Views */,
 				7C35E9C12BD1854800461DE3 /* ProfileTableViewCell.swift */,
 			);
@@ -274,16 +343,6 @@
 			path = AuthorizationScreen;
 			sourceTree = "<group>";
 		};
-		7CD1F44C2BCFDB90005DD65A /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				7C35E9B92BD15BCC00461DE3 /* EntityUser+CoreDataClass.swift */,
-				7C35E9BA2BD15BCC00461DE3 /* EntityUser+CoreDataProperties.swift */,
-				7C35E9AF2BD1577D00461DE3 /* User.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -310,6 +369,7 @@
 				7C35E97C2BCFF34700461DE3 /* FirebaseAuth */,
 				7C35E97E2BCFF34F00461DE3 /* FirebaseStorage */,
 				7C35E9802BCFF35300461DE3 /* FirebaseDatabase */,
+				7C35E9D92BD4113600461DE3 /* JGProgressHUD */,
 			);
 			productName = VkClient;
 			productReference = 7CD1F4142BCFD41F005DD65A /* VkClient.app */;
@@ -341,6 +401,7 @@
 			mainGroup = 7CD1F40B2BCFD41F005DD65A;
 			packageReferences = (
 				7CD1F4312BCFD64F005DD65A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				7C35E9D82BD4113600461DE3 /* XCRemoteSwiftPackageReference "JGProgressHUD" */,
 			);
 			productRefGroup = 7CD1F4152BCFD41F005DD65A /* Products */;
 			projectDirPath = "";
@@ -369,34 +430,45 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7C35E9BB2BD15BCC00461DE3 /* EntityUser+CoreDataClass.swift in Sources */,
-				7C35E9BC2BD15BCC00461DE3 /* EntityUser+CoreDataProperties.swift in Sources */,
+				7C35E9DC2BD411B100461DE3 /* FriendsView.swift in Sources */,
+				7C35E9D12BD2CB9B00461DE3 /* User.swift in Sources */,
 				7C35E9762BCFE7FC00461DE3 /* AppCoordinator.swift in Sources */,
+				7C35E9D72BD3FAEC00461DE3 /* ProfileViewModel.swift in Sources */,
 				7C35E9C22BD1854800461DE3 /* ProfileTableViewCell.swift in Sources */,
+				7C35E9DE2BD411C400461DE3 /* FriendsViewModel.swift in Sources */,
 				7C35E9922BD008D900461DE3 /* RegistrationViewModel.swift in Sources */,
 				7C35E9862BCFF6E900461DE3 /* TabBarController.swift in Sources */,
 				7CD1F4442BCFDA7E005DD65A /* RegistrationController.swift in Sources */,
 				7CD1F41C2BCFD41F005DD65A /* NewsFeedController.swift in Sources */,
 				7C35E98E2BD001D500461DE3 /* AuthorizationViewModel.swift in Sources */,
+				7C35E9EC2BD44E5400461DE3 /* PeopleProfileViewModel.swift in Sources */,
 				7C35E9942BD009D400461DE3 /* RealTimeDataBaseManager.swift in Sources */,
 				7C35E98A2BCFF9F900461DE3 /* AuthorizationView.swift in Sources */,
+				7C35E9F12BD45A3900461DE3 /* NewsFeedTableViewCell.swift in Sources */,
 				7C35E9722BCFE21500461DE3 /* Coordinator.swift in Sources */,
 				7CD1F43F2BCFD9F6005DD65A /* FriendsController.swift in Sources */,
 				7CD1F4182BCFD41F005DD65A /* AppDelegate.swift in Sources */,
+				7C35E9D42BD2CBC300461DE3 /* EntityUser+CoreDataClass.swift in Sources */,
+				7C35E9D52BD2CBC300461DE3 /* EntityUser+CoreDataProperties.swift in Sources */,
+				7C35E9E82BD4462100461DE3 /* PeopleProfileController.swift in Sources */,
 				7C35E9832BCFF3E700461DE3 /* AuthorizationControllerCoordinator.swift in Sources */,
 				7C35E9902BD0025D00461DE3 /* RegistrationControllerCoordinator.swift in Sources */,
 				7C35E9962BD00B9D00461DE3 /* StorageManager.swift in Sources */,
 				7CD1F4462BCFDA93005DD65A /* AuthorizationController.swift in Sources */,
 				7C35E9882BCFF7C900461DE3 /* TabBarControllerCoordinator.swift in Sources */,
-				7C35E9B32BD1592500461DE3 /* VkClient.xcdatamodeld in Sources */,
 				7C35E9C02BD17ED600461DE3 /* HeaderView.swift in Sources */,
 				7C35E9982BD141FD00461DE3 /* CoreDataManager.swift in Sources */,
 				7C35E98C2BD0006C00461DE3 /* RegistrationView.swift in Sources */,
+				7C35E9EF2BD45A2000461DE3 /* NewsFeedTableView.swift in Sources */,
 				7CD1F41A2BCFD41F005DD65A /* SceneDelegate.swift in Sources */,
+				7C35E9E02BD417C700461DE3 /* Extensions.swift in Sources */,
 				7C35E9742BCFE75F00461DE3 /* BaseCoordinator.swift in Sources */,
-				7C35E9B02BD1577D00461DE3 /* User.swift in Sources */,
 				7C35E97A2BCFEA7A00461DE3 /* ProfileView.swift in Sources */,
 				7CD1F4412BCFDA13005DD65A /* ProfileController.swift in Sources */,
+				7C35E9E42BD418A400461DE3 /* Friend.swift in Sources */,
+				7C35E9C62BD2C84600461DE3 /* VkClient.xcdatamodeld in Sources */,
+				7C35E9E22BD4181800461DE3 /* FriendsViewCell.swift in Sources */,
+				7C35E9EA2BD4471400461DE3 /* PeopleProfileView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -611,6 +683,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		7C35E9D82BD4113600461DE3 /* XCRemoteSwiftPackageReference "JGProgressHUD" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/JonasGessner/JGProgressHUD";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.2.0;
+			};
+		};
 		7CD1F4312BCFD64F005DD65A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -636,6 +716,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7CD1F4312BCFD64F005DD65A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseDatabase;
+		};
+		7C35E9D92BD4113600461DE3 /* JGProgressHUD */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7C35E9D82BD4113600461DE3 /* XCRemoteSwiftPackageReference "JGProgressHUD" */;
+			productName = JGProgressHUD;
 		};
 		7CD1F4322BCFD64F005DD65A /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -665,14 +750,14 @@
 /* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
-		7C35E9B12BD1592500461DE3 /* VkClient.xcdatamodeld */ = {
+		7C35E9C42BD2C84600461DE3 /* VkClient.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				7C35E9B22BD1592500461DE3 /* VkClient.xcdatamodel */,
+				7C35E9C52BD2C84600461DE3 /* VkClient.xcdatamodel */,
 			);
-			currentVersion = 7C35E9B22BD1592500461DE3 /* VkClient.xcdatamodel */;
+			currentVersion = 7C35E9C52BD2C84600461DE3 /* VkClient.xcdatamodel */;
 			name = VkClient.xcdatamodeld;
-			path = /Users/ruslankozlov/git/iOS/VkClient/VkClient/Service/VkClient.xcdatamodeld;
+			path = /Users/ruslankozlov/git/iOS/VkClient/VkClient/Supporting/VkClient.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

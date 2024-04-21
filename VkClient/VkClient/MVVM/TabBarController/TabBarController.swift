@@ -24,6 +24,9 @@ class TabBarController: UITabBarController {
 
         let tabBarAppearance = UITabBarAppearance()
         tabBarAppearance.configureWithOpaqueBackground()
+        tabBarAppearance.backgroundColor = .white // Установите цвет фона
+
+        UITabBar.appearance().standardAppearance = tabBarAppearance
         UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
 
         guard let items = self.tabBar.items else { return }
@@ -32,4 +35,6 @@ class TabBarController: UITabBarController {
         items[1].image = UIImage(systemName: "person.2")
         items[2].image = UIImage(systemName: "person.circle")
     }
+
+    
 }

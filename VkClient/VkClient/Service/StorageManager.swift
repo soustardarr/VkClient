@@ -53,7 +53,7 @@ extension StorageManager {
     }
 
 
-    func downloadAvatarDataSelfProfile() {
+    func downloadAvatarDataSelfProfile(completion: @escaping (Bool) -> ()) {
         guard let email = UserDefaults.standard.value(forKey: "email") as? String else { return }
         let safeEmail = RealTimeDataBaseManager.safeEmail(emailAddress: email)
         let fileName = safeEmail + "_profile_picture.png"
@@ -64,11 +64,30 @@ extension StorageManager {
             switch result {
             case .success(let url):
                 URLSession.shared.dataTask(with: url) { data, _, error in
+                    print("\(Thread.current) ПОТОК URLSession")
                     guard let data = data, error == nil else { return }
                     self.avatarData = data
+                    completion(true)
                 }.resume()
             case .failure(let error):
-                print("jbfgskdbgdkfbgkdfjkbgjdfbgd \(error)")
+                completion(false)
+                print("не удалось найти ссылку на скачивание, Error: \(error)")
+            }
+
+        }
+    }
+
+    func downloadAvatarDataOtherUsers(_ photoFileName: String, completionHandler: @escaping (Result<Data?, Error>) -> ()) {
+        let path = "images/" + photoFileName
+        getDownloadUrl(for: path) { result in
+            switch result {
+            case .success(let url):
+                URLSession.shared.dataTask(with: url) { data, _, error in
+                    guard let data = data, error == nil else { return }
+                    completionHandler(.success(data))
+                }.resume()
+            case .failure(let error):
+                completionHandler(.failure(error))
             }
 
         }

@@ -1,8 +1,8 @@
 //
-//  User.swift
+//  Users.swift
 //  VkClient
 //
-//  Created by Ruslan Kozlov on 17.04.2024.
+//  Created by Ruslan Kozlov on 19.04.2024.
 //
 
 import Foundation

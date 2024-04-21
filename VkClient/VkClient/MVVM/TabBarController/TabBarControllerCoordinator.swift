@@ -24,4 +24,9 @@ class TabBarControllerCoordinator: BaseCoordinator {
         tabBar.configureTabBar(viewControllers: newsFeedController, friendsController, profileController)
         navigationController.pushViewController(tabBar, animated: true)
     }
+
+    func popToRoot() {
+        navigationController.popToRootViewController(animated: true)
+    }
+
 }

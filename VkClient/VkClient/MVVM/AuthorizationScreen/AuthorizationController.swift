@@ -22,7 +22,7 @@ class AuthorizationController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        CoreDataManager.shared.deleteAllUsers()
+//        CoreDataManager.shared.deleteAllUsers()
         setup()
     }
 

@@ -32,8 +32,10 @@ class AuthorizationView: UIView {
         loginTextField.placeholder = "email..."
         loginTextField.autocorrectionType = .no
         loginTextField.autocapitalizationType = .none
+        loginTextField.backgroundColor = .white
         loginTextField.returnKeyType = .continue
         loginTextField.borderStyle = .roundedRect
+        loginTextField.textColor = .black
         loginTextField.tintColor = .black
         return loginTextField
     }()
@@ -43,9 +45,11 @@ class AuthorizationView: UIView {
         passwordTextField.keyboardType = .default
         passwordTextField.placeholder = "пароль..."
         passwordTextField.borderStyle = .roundedRect
+        passwordTextField.backgroundColor = .white
         passwordTextField.autocorrectionType = .no
         passwordTextField.autocapitalizationType = .none
         passwordTextField.returnKeyType = .done
+        passwordTextField.textColor = .black
         passwordTextField.isSecureTextEntry = true
         return passwordTextField
     }()

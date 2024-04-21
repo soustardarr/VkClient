@@ -2,7 +2,7 @@
 //  EntityUser+CoreDataProperties.swift
 //  VkClient
 //
-//  Created by Ruslan Kozlov on 18.04.2024.
+//  Created by Ruslan Kozlov on 19.04.2024.
 //
 //
 
@@ -16,11 +16,11 @@ extension EntityUser {
         return NSFetchRequest<EntityUser>(entityName: "EntityUser")
     }
 
-    @NSManaged public var name: String?
-    @NSManaged public var safeEmail: String?
-    @NSManaged public var profilePictureFileName: String?
-    @NSManaged public var profilePicture: Data?
     @NSManaged public var email: String?
+    @NSManaged public var name: String?
+    @NSManaged public var profilePicture: Data?
+    @NSManaged public var profilePictureFileName: String?
+    @NSManaged public var safeEmail: String?
 
 }
 

@@ -39,23 +39,27 @@ class RegistrationView: UIView {
     }()
 
     var nameTextField: UITextField = {
-        let loginTextField = UITextField()
-        loginTextField.keyboardType = .emailAddress
-        loginTextField.placeholder = "твой никнейм..."
-        loginTextField.autocorrectionType = .no
-        loginTextField.autocapitalizationType = .none
-        loginTextField.returnKeyType = .continue
-        loginTextField.borderStyle = .roundedRect
-        return loginTextField
+        let nameTextField = UITextField()
+        nameTextField.backgroundColor = .white
+        nameTextField.placeholder = "твой никнейм..."
+        nameTextField.autocorrectionType = .no
+        nameTextField.autocapitalizationType = .none
+        nameTextField.returnKeyType = .continue
+        nameTextField.textColor = .black
+        nameTextField.borderStyle = .roundedRect
+        return nameTextField
     }()
 
     var loginTextField: UITextField = {
         let loginTextField = UITextField()
         loginTextField.keyboardType = .emailAddress
+        loginTextField.backgroundColor = .white
         loginTextField.placeholder = "email..."
         loginTextField.autocorrectionType = .no
         loginTextField.autocapitalizationType = .none
         loginTextField.returnKeyType = .continue
+        loginTextField.textColor = .black
+
         loginTextField.borderStyle = .roundedRect
         return loginTextField
     }()
@@ -63,11 +67,13 @@ class RegistrationView: UIView {
     var passwordTextField: UITextField = {
         let passwordTextField = UITextField()
         passwordTextField.keyboardType = .default
+        passwordTextField.backgroundColor = .white
         passwordTextField.placeholder = "пароль..."
         passwordTextField.borderStyle = .roundedRect
         passwordTextField.autocorrectionType = .no
         passwordTextField.autocapitalizationType = .none
         passwordTextField.returnKeyType = .continue
+        passwordTextField.textColor = .black
         passwordTextField.isSecureTextEntry = true
         return passwordTextField
     }()
@@ -75,11 +81,13 @@ class RegistrationView: UIView {
     var secondPasswordTextField: UITextField = {
         let passwordTextField = UITextField()
         passwordTextField.keyboardType = .default
+        passwordTextField.backgroundColor = .white
         passwordTextField.placeholder = "пароль второй раз..."
         passwordTextField.borderStyle = .roundedRect
         passwordTextField.autocorrectionType = .no
         passwordTextField.autocapitalizationType = .none
         passwordTextField.returnKeyType = .done
+        passwordTextField.textColor = .black
         passwordTextField.isSecureTextEntry = true
         return passwordTextField
     }()

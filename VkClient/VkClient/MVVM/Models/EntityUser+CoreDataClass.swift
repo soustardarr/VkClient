@@ -2,7 +2,7 @@
 //  EntityUser+CoreDataClass.swift
 //  VkClient
 //
-//  Created by Ruslan Kozlov on 18.04.2024.
+//  Created by Ruslan Kozlov on 19.04.2024.
 //
 //
 

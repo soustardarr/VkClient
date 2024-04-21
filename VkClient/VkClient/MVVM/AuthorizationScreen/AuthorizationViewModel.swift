@@ -27,20 +27,17 @@ class AuthorizationViewModel {
                 return
             }
             UserDefaults.standard.set(login, forKey: "email")
-//            let queue = DispatchQueue.global(qos: .default)
-//            let workItem = DispatchWorkItem {
-                RealTimeDataBaseManager.shared.getSelfProfileInfo { result in
-                    switch result {
-                    case .success(let user):
-                        print(user)
-//                        CoreDataManager.shared.saveProfileInfo(with: user)
-                    }
+            RealTimeDataBaseManager.shared.getSelfProfileInfo { result in
+                switch result {
+                case .success(let user):
+                    print(user)
+                    RealTimeDataBaseManager.shared.currentUser = user
+                case .failure(_):
+                    completion(false)
                 }
-//            }
-//            queue.async(execute: workItem)
-//            workItem.notify(queue: .main, execute: {
-                completion(true)
-//            })
+
+            }
+            completion(true)
         }
 
     }

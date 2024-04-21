@@ -7,39 +7,45 @@
 
 import UIKit
 
+protocol HeaderViewDelegate: AnyObject {
+    func didTappedSignOutButton()
+}
+
 class HeaderView: UITableViewHeaderFooterView {
 
-    private var backgroundViewContainer: UIView = {
+    weak var delegate: HeaderViewDelegate?
+
+    var backgroundViewContainer: UIView = {
         let view = UIView()
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
-    private var avatarImageView: UIImageView = {
+    var avatarImageView: UIImageView = {
         let avatarImageView = UIImageView()
         avatarImageView.image = .kitty
         avatarImageView.clipsToBounds = true
         avatarImageView.layer.cornerRadius = 60
         avatarImageView.layer.borderWidth = 2
-        avatarImageView.layer.borderColor = UIColor.white.cgColor
+        avatarImageView.layer.borderColor = UIColor.lightGray.cgColor
         avatarImageView.translatesAutoresizingMaskIntoConstraints = false
         return avatarImageView
     }()
 
-    private var nameLabel: UILabel = {
+    var nameLabel: UILabel = {
         var nameLabel = UILabel()
         nameLabel.text = "Name"
         nameLabel.font = UIFont.systemFont(ofSize: 20)
-        nameLabel.textColor = .white
+        nameLabel.textColor = .black
         nameLabel.textAlignment = .center
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         return nameLabel
     }()
 
-    private var exitButton: UIImageView = {
+    var exitButton: UIImageView = {
         let exitButton = UIImageView()
-        let colorConfig = UIImage.SymbolConfiguration(paletteColors: [.white])
+        let colorConfig = UIImage.SymbolConfiguration(paletteColors: [.link])
         let settingsImage = UIImage(systemName: "rectangle.portrait.and.arrow.forward", withConfiguration: colorConfig)
         exitButton.image = settingsImage
         exitButton.isUserInteractionEnabled = true
@@ -47,9 +53,9 @@ class HeaderView: UITableViewHeaderFooterView {
         return exitButton
     }()
 
-    private var addPublicationButton: UIImageView = {
+    var addPublicationButton: UIImageView = {
         let addPublicationButton = UIImageView()
-        let colorConfig = UIImage.SymbolConfiguration(paletteColors: [.white])
+        let colorConfig = UIImage.SymbolConfiguration(paletteColors: [.link])
         let settingsImage = UIImage(systemName: "pencil.tip.crop.circle.badge.plus", withConfiguration: colorConfig)
         addPublicationButton.image = settingsImage
         addPublicationButton.isUserInteractionEnabled = true
@@ -57,13 +63,13 @@ class HeaderView: UITableViewHeaderFooterView {
         return addPublicationButton
     }()
 
-    private var friendScreenButton: UIButton = {
+    var friendScreenButton: UIButton = {
         let button = UIButton()
         button.setTitle("Друзья", for: .normal)
         button.layer.cornerRadius = 7
         button.clipsToBounds = true
         button.setTitleColor(.black, for: .normal)
-        button.backgroundColor = .white
+        button.backgroundColor = .lightGray
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -74,7 +80,7 @@ class HeaderView: UITableViewHeaderFooterView {
         button.layer.cornerRadius = 7
         button.clipsToBounds = true
         button.setTitleColor(.black, for: .normal)
-        button.backgroundColor = .white
+        button.backgroundColor = .lightGray
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -93,10 +99,19 @@ class HeaderView: UITableViewHeaderFooterView {
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         setupUI()
+        addGesture()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    private func addGesture() {
+        let exitGesture = UITapGestureRecognizer(target: self, action: #selector(handleExitGesture))
+        exitButton.addGestureRecognizer(exitGesture)
+    }
+    @objc private func handleExitGesture() {
+        delegate?.didTappedSignOutButton()
     }
 
     private func setupUI() {
