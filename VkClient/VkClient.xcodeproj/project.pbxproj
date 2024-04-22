@@ -43,6 +43,12 @@
 		7C35E9EC2BD44E5400461DE3 /* PeopleProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C35E9EB2BD44E5400461DE3 /* PeopleProfileViewModel.swift */; };
 		7C35E9EF2BD45A2000461DE3 /* NewsFeedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C35E9EE2BD45A2000461DE3 /* NewsFeedTableView.swift */; };
 		7C35E9F12BD45A3900461DE3 /* NewsFeedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C35E9F02BD45A3900461DE3 /* NewsFeedTableViewCell.swift */; };
+		7CA0E0882BD55BD600D91B4B /* NewsFeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA0E0872BD55BD600D91B4B /* NewsFeedViewModel.swift */; };
+		7CA0E08B2BD55DEC00D91B4B /* CreatePublicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA0E08A2BD55DEC00D91B4B /* CreatePublicationController.swift */; };
+		7CA0E08D2BD55EF400D91B4B /* CreatePublicationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA0E08C2BD55EF400D91B4B /* CreatePublicationView.swift */; };
+		7CA0E08F2BD5840100D91B4B /* CreatePublicationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA0E08E2BD5840100D91B4B /* CreatePublicationViewModel.swift */; };
+		7CA0E0912BD58E0E00D91B4B /* Publication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA0E0902BD58E0E00D91B4B /* Publication.swift */; };
+		7CA0E0932BD6E1F700D91B4B /* CoordinatorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA0E0922BD6E1F700D91B4B /* CoordinatorManager.swift */; };
 		7CD1F4182BCFD41F005DD65A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD1F4172BCFD41F005DD65A /* AppDelegate.swift */; };
 		7CD1F41A2BCFD41F005DD65A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD1F4192BCFD41F005DD65A /* SceneDelegate.swift */; };
 		7CD1F41C2BCFD41F005DD65A /* NewsFeedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD1F41B2BCFD41F005DD65A /* NewsFeedController.swift */; };
@@ -107,6 +113,12 @@
 		7C35E9EB2BD44E5400461DE3 /* PeopleProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleProfileViewModel.swift; sourceTree = "<group>"; };
 		7C35E9EE2BD45A2000461DE3 /* NewsFeedTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeedTableView.swift; sourceTree = "<group>"; };
 		7C35E9F02BD45A3900461DE3 /* NewsFeedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeedTableViewCell.swift; sourceTree = "<group>"; };
+		7CA0E0872BD55BD600D91B4B /* NewsFeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeedViewModel.swift; sourceTree = "<group>"; };
+		7CA0E08A2BD55DEC00D91B4B /* CreatePublicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePublicationController.swift; sourceTree = "<group>"; };
+		7CA0E08C2BD55EF400D91B4B /* CreatePublicationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePublicationView.swift; sourceTree = "<group>"; };
+		7CA0E08E2BD5840100D91B4B /* CreatePublicationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePublicationViewModel.swift; sourceTree = "<group>"; };
+		7CA0E0902BD58E0E00D91B4B /* Publication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Publication.swift; sourceTree = "<group>"; };
+		7CA0E0922BD6E1F700D91B4B /* CoordinatorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorManager.swift; sourceTree = "<group>"; };
 		7CD1F4142BCFD41F005DD65A /* VkClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VkClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CD1F4172BCFD41F005DD65A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7CD1F4192BCFD41F005DD65A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -147,6 +159,7 @@
 				7C35E9712BCFE21500461DE3 /* Coordinator.swift */,
 				7C35E9732BCFE75F00461DE3 /* BaseCoordinator.swift */,
 				7C35E9752BCFE7FC00461DE3 /* AppCoordinator.swift */,
+				7CA0E0922BD6E1F700D91B4B /* CoordinatorManager.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -167,13 +180,14 @@
 			path = TabBarController;
 			sourceTree = "<group>";
 		};
-		7C35E9C32BD192FD00461DE3 /* Views */ = {
+		7C35E9C32BD192FD00461DE3 /* ProfileViews */ = {
 			isa = PBXGroup;
 			children = (
+				7C35E9C12BD1854800461DE3 /* ProfileTableViewCell.swift */,
 				7C35E9792BCFEA7A00461DE3 /* ProfileView.swift */,
 				7C35E9BF2BD17ED600461DE3 /* HeaderView.swift */,
 			);
-			path = Views;
+			path = ProfileViews;
 			sourceTree = "<group>";
 		};
 		7C35E9CF2BD2CB7A00461DE3 /* Models */ = {
@@ -182,6 +196,7 @@
 				7C35E9D22BD2CBC300461DE3 /* EntityUser+CoreDataClass.swift */,
 				7C35E9D32BD2CBC300461DE3 /* EntityUser+CoreDataProperties.swift */,
 				7C35E9D02BD2CB9B00461DE3 /* User.swift */,
+				7CA0E0902BD58E0E00D91B4B /* Publication.swift */,
 				7C35E9E32BD418A400461DE3 /* Friend.swift */,
 			);
 			path = Models;
@@ -213,6 +228,16 @@
 				7C35E9F02BD45A3900461DE3 /* NewsFeedTableViewCell.swift */,
 			);
 			path = NewsFeedTableView;
+			sourceTree = "<group>";
+		};
+		7CA0E0892BD55DAC00D91B4B /* CreatePublicationScreen */ = {
+			isa = PBXGroup;
+			children = (
+				7CA0E08A2BD55DEC00D91B4B /* CreatePublicationController.swift */,
+				7CA0E08C2BD55EF400D91B4B /* CreatePublicationView.swift */,
+				7CA0E08E2BD5840100D91B4B /* CreatePublicationViewModel.swift */,
+			);
+			path = CreatePublicationScreen;
 			sourceTree = "<group>";
 		};
 		7CD1F40B2BCFD41F005DD65A = {
@@ -270,10 +295,10 @@
 			isa = PBXGroup;
 			children = (
 				7C35E9CF2BD2CB7A00461DE3 /* Models */,
+				7C35E9E62BD445E000461DE3 /* OtherUserScreen */,
 				7C35E9842BCFF6AE00461DE3 /* TabBarController */,
 				7CD1F44B2BCFDAF4005DD65A /* AuthorizationScreen */,
 				7CD1F44A2BCFDADB005DD65A /* RegistrationScreen */,
-				7C35E9E62BD445E000461DE3 /* OtherUserScreen */,
 				7CD1F4492BCFDABE005DD65A /* ProfileScreen */,
 				7CD1F4482BCFDAAA005DD65A /* FriendsScreen */,
 				7C35E9ED2BD4599900461DE3 /* NewsFeedTableView */,
@@ -296,6 +321,7 @@
 			isa = PBXGroup;
 			children = (
 				7CD1F41B2BCFD41F005DD65A /* NewsFeedController.swift */,
+				7CA0E0872BD55BD600D91B4B /* NewsFeedViewModel.swift */,
 			);
 			path = NewsFeedScreen;
 			sourceTree = "<group>";
@@ -315,8 +341,8 @@
 			children = (
 				7CD1F4402BCFDA13005DD65A /* ProfileController.swift */,
 				7C35E9D62BD3FAEC00461DE3 /* ProfileViewModel.swift */,
-				7C35E9C32BD192FD00461DE3 /* Views */,
-				7C35E9C12BD1854800461DE3 /* ProfileTableViewCell.swift */,
+				7C35E9C32BD192FD00461DE3 /* ProfileViews */,
+				7CA0E0892BD55DAC00D91B4B /* CreatePublicationScreen */,
 			);
 			path = ProfileScreen;
 			sourceTree = "<group>";
@@ -433,15 +459,18 @@
 				7C35E9DC2BD411B100461DE3 /* FriendsView.swift in Sources */,
 				7C35E9D12BD2CB9B00461DE3 /* User.swift in Sources */,
 				7C35E9762BCFE7FC00461DE3 /* AppCoordinator.swift in Sources */,
+				7CA0E08F2BD5840100D91B4B /* CreatePublicationViewModel.swift in Sources */,
 				7C35E9D72BD3FAEC00461DE3 /* ProfileViewModel.swift in Sources */,
 				7C35E9C22BD1854800461DE3 /* ProfileTableViewCell.swift in Sources */,
 				7C35E9DE2BD411C400461DE3 /* FriendsViewModel.swift in Sources */,
 				7C35E9922BD008D900461DE3 /* RegistrationViewModel.swift in Sources */,
 				7C35E9862BCFF6E900461DE3 /* TabBarController.swift in Sources */,
 				7CD1F4442BCFDA7E005DD65A /* RegistrationController.swift in Sources */,
+				7CA0E08D2BD55EF400D91B4B /* CreatePublicationView.swift in Sources */,
 				7CD1F41C2BCFD41F005DD65A /* NewsFeedController.swift in Sources */,
 				7C35E98E2BD001D500461DE3 /* AuthorizationViewModel.swift in Sources */,
 				7C35E9EC2BD44E5400461DE3 /* PeopleProfileViewModel.swift in Sources */,
+				7CA0E0912BD58E0E00D91B4B /* Publication.swift in Sources */,
 				7C35E9942BD009D400461DE3 /* RealTimeDataBaseManager.swift in Sources */,
 				7C35E98A2BCFF9F900461DE3 /* AuthorizationView.swift in Sources */,
 				7C35E9F12BD45A3900461DE3 /* NewsFeedTableViewCell.swift in Sources */,
@@ -450,9 +479,12 @@
 				7CD1F4182BCFD41F005DD65A /* AppDelegate.swift in Sources */,
 				7C35E9D42BD2CBC300461DE3 /* EntityUser+CoreDataClass.swift in Sources */,
 				7C35E9D52BD2CBC300461DE3 /* EntityUser+CoreDataProperties.swift in Sources */,
+				7CA0E08B2BD55DEC00D91B4B /* CreatePublicationController.swift in Sources */,
 				7C35E9E82BD4462100461DE3 /* PeopleProfileController.swift in Sources */,
 				7C35E9832BCFF3E700461DE3 /* AuthorizationControllerCoordinator.swift in Sources */,
 				7C35E9902BD0025D00461DE3 /* RegistrationControllerCoordinator.swift in Sources */,
+				7CA0E0932BD6E1F700D91B4B /* CoordinatorManager.swift in Sources */,
+				7CA0E0882BD55BD600D91B4B /* NewsFeedViewModel.swift in Sources */,
 				7C35E9962BD00B9D00461DE3 /* StorageManager.swift in Sources */,
 				7CD1F4462BCFDA93005DD65A /* AuthorizationController.swift in Sources */,
 				7C35E9882BCFF7C900461DE3 /* TabBarControllerCoordinator.swift in Sources */,

@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseAuth
+import UIKit
 
 class ProfileViewModel {
     
@@ -23,10 +24,10 @@ class ProfileViewModel {
 
     func signOut() {
         UserDefaults.standard.removeObject(forKey: "email")
-
+        CoreDataManager.shared.deleteAllUsers()
         do {
             try FirebaseAuth.Auth.auth().signOut()
-            
+
         } catch let error {
             print(error)
         }

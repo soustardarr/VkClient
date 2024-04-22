@@ -22,6 +22,7 @@ class FriendsController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        navigationItem.hidesBackButton = true
         navigationController?.navigationBar.isHidden = false
         setupNavigationBar()
     }
@@ -113,11 +114,11 @@ extension FriendsController: UITableViewDataSource {
 
             let user = User(name: self.results[indexPath.row].name,
                                   email: self.results[indexPath.row].email)
-            StorageManager.shared.downloadAvatarDataOtherUsers(user.profilePictureFileName) { result in
+            StorageManager.shared.downloadImage(user.profilePictureFileName) { result in
                 switch result {
                 case.success(let imageData):
                     let user = Friend(name: self.results[indexPath.row].name,
-                                      avatar: UIImage(data: imageData ?? Data()))
+                                      avatar: UIImage(data: imageData))
                     print(user)
                     cell?.config(user)
                 case .failure(let error):

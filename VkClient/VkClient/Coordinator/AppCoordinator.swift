@@ -11,7 +11,8 @@ import FirebaseAuth
 
 class AppCoordinator: BaseCoordinator {
 
-    private var window: UIWindow
+    var window: UIWindow
+    
 
     private var navigationController: UINavigationController = {
         let navigationContoller = UINavigationController()
@@ -36,5 +37,5 @@ class AppCoordinator: BaseCoordinator {
             authorizationViewContollerCoordinator.start()
         }
     }
-    
+
 }

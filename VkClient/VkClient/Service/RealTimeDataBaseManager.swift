@@ -14,6 +14,7 @@ enum RealTimeDataBaseError: Error {
     case failedProfile
     case failedReceivingUsers
     case failedReceivingFriends
+    case failedReceivingPublication
 }
 
 class RealTimeDataBaseManager {
@@ -133,6 +134,55 @@ extension RealTimeDataBaseManager {
             }
             completion(.success(users))
         }
+    }
+
+    func getEmailFriends(safeEmail: String, completion: @escaping (Result<[String], Error>) -> Void) {
+        database.child(safeEmail).child("friends").observeSingleEvent(of: .value) { snapshot in
+            if let friends = snapshot.value as? [String] {
+                completion(.success(friends))
+            } else {
+                completion(.failure(RealTimeDataBaseError.failedReceivingFriends))
+            }
+        }
+    }
+
+
+    func getPeopleProfileInfoWithSafeEmail(safeEmail: String, completionHandler: @escaping (Result<User, Error>) -> ()) {
+        database.child(safeEmail).observeSingleEvent(of: .value) { snapshot in
+            if let userDict = snapshot.value as? [String: Any],
+               let name = userDict["name"] as? String,
+               let profilePictureFileName = userDict["profilePictureFileName"] as? String,
+               let email = userDict["email"] as? String,
+               let friends = userDict["friends"] as? [String],
+               let followers = userDict["followers"] as? [String],
+               let subscriptions = userDict["subscriptions"] as? [String],
+               let publicationsDict = userDict["publications"] as? [String: Any] {
+                var publications: [Publication] = []
+                for (_, value) in publicationsDict {
+                    if let publicationDict = value as? [String: Any] {
+                        let idString = publicationDict["id"] as? String
+                        let id = UUID(uuidString: idString ?? "")
+                        let text = publicationDict["text"] as? String
+                        let date = publicationDict["date"] as? String
+                        let publication = Publication(id: id ?? UUID(), text: text ?? "", date: date ?? "")
+                        publications.append(publication)
+                    }
+                }
+                StorageManager.shared.downloadImage(profilePictureFileName) { result in
+                    switch result {
+                    case .success(let data):
+                        let returnUser = User(name: name, email: email, profilePicture: data, friends: friends, followers: followers, subscriptions: subscriptions, publiсations: publications)
+                        completionHandler(.success(returnUser))
+                    case .failure(let error):
+                        completionHandler(.failure(error))
+                    }
+                }
+            } else {
+                completionHandler(.failure(RealTimeDataBaseError.failedReceivingUsers))
+                print("Неизвестный формат снимка данных")
+            }
+        }
+
     }
 }
 
@@ -275,7 +325,140 @@ extension RealTimeDataBaseManager {
                 }
             }
     }
+}
+
+
+// MARK: - set publication
+
+extension RealTimeDataBaseManager {
+
+    func sendPublication(publication: Publication) {
+        let email = UserDefaults.standard.string(forKey: "email") ?? ""
+        let selfSafeEmail = RealTimeDataBaseManager.safeEmail(emailAddress: email)
+
+        database.child(selfSafeEmail)
+            .child("publications")
+            .observeSingleEvent(of: .value) { [ weak self ] snapshot in
+                guard let strongSelf = self else { return }
+                if var publications = snapshot.value as? [String: Any] {
+                    let publicationData: [String: String] = [
+                        "publiactionPictureFileName": publication.publiactionPictureFileName,
+                        "date": publication.date,
+                        "text": publication.text ?? "",
+                        "id": publication.id.uuidString
+                    ]
+                    publications["\(publication.id)"] = publicationData
+                    strongSelf.database.child(selfSafeEmail).child("publications").setValue(publications)
+                    print("успешное добавление публикации")
+                } else {
+                    let publicationData: [String: String] = [
+                        "publiactionPictureFileName": publication.publiactionPictureFileName,
+                        "date": publication.date,
+                        "text": publication.text ?? "",
+                        "id": publication.id.uuidString
+                    ]
+                    var publications: [String: Any] = [:]
+                    publications["\(publication.id)"] = publicationData
+                    strongSelf.database.child("\(selfSafeEmail)/publications").setValue(publications)
+                    print("успешная вствака первой публикации")
+                }
+            }
+    }
+
+    // метод большой, извиняюсь за эту глупость(я один понимаю что тут написано((( )
+    func obtainUserPublication(completion: @escaping (Result<[Publication], Error>) -> Void) {
+        let email = UserDefaults.standard.string(forKey: "email") ?? ""
+        let safeEmail = RealTimeDataBaseManager.safeEmail(emailAddress: email)
+        var friendEmails: [String] = []
+        let serialQueue = DispatchQueue(label: "obtainUserPublication")
+        let group = DispatchGroup()
+        var users: [User] = []
+        let getEmailFriendsItem = DispatchWorkItem {
+            RealTimeDataBaseManager.shared.getEmailFriends(safeEmail: safeEmail) { result in
+                switch result {
+                case .success(let emails):
+                    friendEmails = emails
+                    print(friendEmails)
+                    group.leave()
+                case .failure(let error):
+                    print("ОШИБКА ПОЛУЧЕНИЯ УМАЙЛОВ ДРУЗЕЙ \(error)")
+                    completion(.failure(error))
+                    group.leave()
+                }
+            }
+        }
+        let getPeopleProfileInfoItem = DispatchWorkItem {
+            print("getPeopleProfileInfoItem!!!1")
+            for friendEmail in friendEmails {
+                print("\(Thread.current) !!!!!!!!")
+                group.enter()
+                RealTimeDataBaseManager.shared.getPeopleProfileInfoWithSafeEmail(safeEmail: friendEmail) { result in
+                    print("\(Thread.current) !!!!!!!!")
+                    switch result {
+                    case .success(let user):
+                        users.append(user)
+                        group.leave()
+                    case .failure(let error):
+                        completion(.failure(error))
+                        group.leave()
+                    }
+                }
+            }
+            group.leave()
+        }
+
+        let completionItem = DispatchWorkItem {
+            var publications: [Publication] = []
+            for user in users {
+                guard let userPublications = user.publiсations else { return }
+                group.enter()
+                for post in userPublications {
+                    group.enter()
+                    StorageManager.shared.downloadImage(post.publiactionPictureFileName) { result in
+                        switch result {
+                        case .success(let data):
+                            let publication = Publication(id: post.id,
+                                                          avatarImage: UIImage(data: user.profilePicture ?? Data()),
+                                                          publiactionImageData: data,
+                                                          name: user.name,
+                                                          text: post.text,
+                                                          date: post.date)
+                            publications.append(publication)
+                            group.leave()
+                        case .failure(let error):
+                            completion(.failure(error))
+                            group.leave()
+                        }
+
+                    }
+                }
+                group.leave()
+
+            }
+            group.leave()
+            group.notify(queue: serialQueue) {
+                completion(.success(publications))
+
+            }
+        }
+
+        group.enter()
+        serialQueue.async(execute: getEmailFriendsItem)
+        group.notify(queue: serialQueue) {
+            group.enter()
+            serialQueue.async(execute: getPeopleProfileInfoItem)
+            group.notify(queue: serialQueue) {
+                group.enter()
+                serialQueue.async(execute: completionItem)
+            }
+        }
+        group.wait()
+
+    }
+
+
 
 
 
 }
+

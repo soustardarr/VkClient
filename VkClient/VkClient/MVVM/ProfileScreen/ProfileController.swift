@@ -16,6 +16,7 @@ class ProfileController: UIViewController {
     private var headerView: HeaderView?
     private var cancellable: Set<AnyCancellable> = []
     private var profileViewModel: ProfileViewModel?
+    private var user: User?
 
 
     var array = ["публикация 1","публикация 2"]
@@ -57,6 +58,7 @@ class ProfileController: UIViewController {
             DispatchQueue.main.async {
                 self?.headerView?.avatarImageView.image = UIImage(data: user?.profilePicture ?? Data())
                 self?.headerView?.nameLabel.text = user?.name
+                self?.user = user
             }
         })
     }
@@ -107,6 +109,14 @@ extension ProfileController: UITableViewDelegate {
 
 
 extension ProfileController: HeaderViewDelegate {
+
+
+    func didTappedCreatePublication() {
+        let createPublicationVC = CreatePublicationController(user: user ?? nil)
+        let navVC = UINavigationController(rootViewController: createPublicationVC)
+        present(navVC, animated: true)
+    }
+    
     func didTappedSignOutButton() {
         let controller = UIAlertController(title: "выход из аккаунта", message: "хотите выйти?", preferredStyle: .alert)
         controller.addAction(UIAlertAction(title: "да", style: .destructive, handler: { [ weak self ] _ in

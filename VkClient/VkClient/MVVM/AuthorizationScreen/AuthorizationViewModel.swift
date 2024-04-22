@@ -30,7 +30,7 @@ class AuthorizationViewModel {
             RealTimeDataBaseManager.shared.getSelfProfileInfo { result in
                 switch result {
                 case .success(let user):
-                    print(user)
+                    CoreDataManager.shared.saveProfileInfo(with: user)
                     RealTimeDataBaseManager.shared.currentUser = user
                 case .failure(_):
                     completion(false)

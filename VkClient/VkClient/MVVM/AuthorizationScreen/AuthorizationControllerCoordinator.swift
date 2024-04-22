@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 class AuthorizationControllerCoordinator: BaseCoordinator {
-    
+
     private var navigationController: UINavigationController
 
     init(navigationController: UINavigationController) {
@@ -33,7 +33,11 @@ class AuthorizationControllerCoordinator: BaseCoordinator {
         let tabBarControllerCoordinator = TabBarControllerCoordinator(navigationController: navigationController)
         add(coorfinator: tabBarControllerCoordinator)
         tabBarControllerCoordinator.start()
-
+        navigationController.viewControllers.last?.navigationItem.hidesBackButton = true
     }
+
+//    func presentAuth() {
+//        navigationController.viewControllers.last
+//    }
 
 }

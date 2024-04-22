@@ -32,9 +32,7 @@ class StorageManager {
 
 extension StorageManager {
 
-
-    func uploadAvatarImage(with data: Data, fileName: String, completion: @escaping (Result<String, Error>) -> ()) {
-
+    func uploadImage(with data: Data, fileName: String, completion: @escaping (Result<String, Error>) -> ()) {
         storage.child("images/\(fileName)").putData(data, metadata: nil) { metadata, error in
             guard error == nil else {
                 completion(.failure(StorageErorrs.failedToUpload))
@@ -77,7 +75,7 @@ extension StorageManager {
         }
     }
 
-    func downloadAvatarDataOtherUsers(_ photoFileName: String, completionHandler: @escaping (Result<Data?, Error>) -> ()) {
+    func downloadImage(_ photoFileName: String, completionHandler: @escaping (Result<Data, Error>) -> ()) {
         let path = "images/" + photoFileName
         getDownloadUrl(for: path) { result in
             switch result {
@@ -104,5 +102,14 @@ extension StorageManager {
             completion(.success(url))
         }
     }
+
+}
+
+// MARK: - publication
+
+
+extension StorageManager {
+
+
 
 }

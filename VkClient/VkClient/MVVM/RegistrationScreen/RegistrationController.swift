@@ -49,8 +49,6 @@ class RegistrationController: UIViewController, UINavigationControllerDelegate {
 extension RegistrationController: RegistrationViewDelegate {
     
     func doneSignUpButtonTapped() {
-
-
         viewModel?.didRegisteredUser(registrationView?.nameTextField.text,
                                      registrationView?.loginTextField.text,
                                      registrationView?.passwordTextField.text,
@@ -101,7 +99,7 @@ extension RegistrationController: UIImagePickerControllerDelegate {
     }
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let photo = info[.originalImage] as? UIImage {
+        if let photo = info[.editedImage] as? UIImage {
             picker.dismiss(animated: true)
             registrationView?.avatarImageView.image = photo
         }

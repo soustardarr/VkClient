@@ -9,6 +9,7 @@ import UIKit
 
 protocol HeaderViewDelegate: AnyObject {
     func didTappedSignOutButton()
+    func didTappedCreatePublication()
 }
 
 class HeaderView: UITableViewHeaderFooterView {
@@ -45,7 +46,7 @@ class HeaderView: UITableViewHeaderFooterView {
 
     var exitButton: UIImageView = {
         let exitButton = UIImageView()
-        let colorConfig = UIImage.SymbolConfiguration(paletteColors: [.link])
+        let colorConfig = UIImage.SymbolConfiguration(paletteColors: [.black])
         let settingsImage = UIImage(systemName: "rectangle.portrait.and.arrow.forward", withConfiguration: colorConfig)
         exitButton.image = settingsImage
         exitButton.isUserInteractionEnabled = true
@@ -53,9 +54,9 @@ class HeaderView: UITableViewHeaderFooterView {
         return exitButton
     }()
 
-    var addPublicationButton: UIImageView = {
+    var createPublicationButton: UIImageView = {
         let addPublicationButton = UIImageView()
-        let colorConfig = UIImage.SymbolConfiguration(paletteColors: [.link])
+        let colorConfig = UIImage.SymbolConfiguration(paletteColors: [.black])
         let settingsImage = UIImage(systemName: "pencil.tip.crop.circle.badge.plus", withConfiguration: colorConfig)
         addPublicationButton.image = settingsImage
         addPublicationButton.isUserInteractionEnabled = true
@@ -109,9 +110,16 @@ class HeaderView: UITableViewHeaderFooterView {
     private func addGesture() {
         let exitGesture = UITapGestureRecognizer(target: self, action: #selector(handleExitGesture))
         exitButton.addGestureRecognizer(exitGesture)
+
+        let createGesture = UITapGestureRecognizer(target: self, action: #selector(handleCreateGesture))
+        createPublicationButton.addGestureRecognizer(createGesture)
+
     }
     @objc private func handleExitGesture() {
         delegate?.didTappedSignOutButton()
+    }
+    @objc private func handleCreateGesture() {
+        delegate?.didTappedCreatePublication()
     }
 
     private func setupUI() {
@@ -122,7 +130,7 @@ class HeaderView: UITableViewHeaderFooterView {
         stackView.addArrangedSubview(friendScreenButton)
         stackView.addArrangedSubview(followersScreenButton)
         backgroundViewContainer.addSubview(stackView)
-        backgroundViewContainer.addSubview(addPublicationButton)
+        backgroundViewContainer.addSubview(createPublicationButton)
 
         NSLayoutConstraint.activate([
                 backgroundViewContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -143,10 +151,10 @@ class HeaderView: UITableViewHeaderFooterView {
                 exitButton.heightAnchor.constraint(equalToConstant: 30),
                 exitButton.widthAnchor.constraint(equalToConstant: 30),
 
-                addPublicationButton.trailingAnchor.constraint(equalTo: exitButton.leadingAnchor, constant: -15),
-                addPublicationButton.topAnchor.constraint(equalTo: backgroundViewContainer.safeAreaLayoutGuide.topAnchor),
-                addPublicationButton.heightAnchor.constraint(equalToConstant: 33),
-                addPublicationButton.widthAnchor.constraint(equalToConstant: 33),
+                createPublicationButton.trailingAnchor.constraint(equalTo: exitButton.leadingAnchor, constant: -15),
+                createPublicationButton.topAnchor.constraint(equalTo: backgroundViewContainer.safeAreaLayoutGuide.topAnchor),
+                createPublicationButton.heightAnchor.constraint(equalToConstant: 33),
+                createPublicationButton.widthAnchor.constraint(equalToConstant: 33),
 
                 stackView.centerXAnchor.constraint(equalTo: backgroundViewContainer.centerXAnchor),
                 stackView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 20),

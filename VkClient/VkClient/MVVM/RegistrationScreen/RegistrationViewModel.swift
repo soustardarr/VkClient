@@ -55,7 +55,7 @@ class RegistrationViewModel {
                                 print("успешная вставка юзера в бд")
                             }
                         }
-                        StorageManager.shared.uploadAvatarImage(with: image.pngData() ?? Data(), fileName: user.profilePictureFileName) { result in
+                        StorageManager.shared.uploadImage(with: image.pngData() ?? Data(), fileName: user.profilePictureFileName) { result in
                             switch result {
                             case .success(let downloadUrl):
                                 // UserDefaults.standard.set(downloadUrl, forKey: "profile_picture_url")

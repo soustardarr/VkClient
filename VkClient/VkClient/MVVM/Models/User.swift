@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct User: Codable {
+struct User {
     var name: String
     var email: String
     var safeEmail: String {
@@ -21,4 +21,6 @@ struct User: Codable {
     var friends: [String]?
     var followers: [String]?
     var subscriptions: [String]?
+    var publiсations: [Publication]?
+
 }

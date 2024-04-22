@@ -25,8 +25,6 @@ class TabBarControllerCoordinator: BaseCoordinator {
         navigationController.pushViewController(tabBar, animated: true)
     }
 
-    func popToRoot() {
-        navigationController.popToRootViewController(animated: true)
-    }
+   
 
 }

@@ -6,15 +6,20 @@
 //
 
 import UIKit
+import Combine
 
 class NewsFeedController: UIViewController {
 
 
     private var newsFeedTableView: NewsFeedTableView?
+    private var viewModel: NewsFeedViewModel?
+    private var publications: [Publication]?
+    private var cancellable: Set<AnyCancellable> = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
+        setupDataBindings()
     }
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.isHidden = true
@@ -23,23 +28,27 @@ class NewsFeedController: UIViewController {
     private func setup() {
         newsFeedTableView = NewsFeedTableView()
         view = newsFeedTableView
+        viewModel = NewsFeedViewModel()
         newsFeedTableView?.newsFeedTable.delegate = self
         newsFeedTableView?.newsFeedTable.dataSource = self
         newsFeedTableView?.newsFeedTable.register(NewsFeedTableViewCell.self, forCellReuseIdentifier: NewsFeedTableViewCell.reuseIdentifier)
         newsFeedTableView?.newsFeedTable.reloadData()
+        viewModel?.getNewsFromFriends()
+    }
 
+    private func setupDataBindings() {
+        viewModel?.$publications.sink(receiveValue: { [ weak self ] posts in
+            self?.publications = posts
+            DispatchQueue.main.async {
+                self?.newsFeedTableView?.newsFeedTable.reloadData()
+            }
+        }).store(in: &cancellable)
     }
 }
 
 extension NewsFeedController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let cell = tableView.dequeueReusableCell(withIdentifier: NewsFeedTableViewCell.reuseIdentifier, for: indexPath) as? NewsFeedTableViewCell
-        guard let validCell = cell else {
-            return UITableView.automaticDimension
-        }
-        validCell.contentView.layoutIfNeeded()
-        let height = validCell.contentView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
-        return height
+        510
     }
 }
 
@@ -47,12 +56,16 @@ extension NewsFeedController: UITableViewDelegate {
 extension NewsFeedController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        5
+        publications?.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: NewsFeedTableViewCell.reuseIdentifier, for: indexPath) as? NewsFeedTableViewCell
-        return cell ?? UITableViewCell()
+        if let posts = publications {
+            cell?.configure(with: posts[indexPath.row])
+            return cell ?? UITableViewCell()
+        }
+        return UITableViewCell()
     }
 }
 
