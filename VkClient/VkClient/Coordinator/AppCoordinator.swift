@@ -11,28 +11,29 @@ import FirebaseAuth
 
 class AppCoordinator: BaseCoordinator {
 
-    var window: UIWindow
-    
+    static let shared = AppCoordinator()
 
-    private var navigationController: UINavigationController = {
-        let navigationContoller = UINavigationController()
-        return navigationContoller
-    }()
-
-    init(window: UIWindow) {
-        self.window = window
-        self.window.rootViewController = navigationController
-        self.window.makeKeyAndVisible()
-    }
+    var window: UIWindow?
+    private var navigationController: UINavigationController?
 
     override func start() {
+        
+        childCoordinators.removeAll()
+        guard let window = window else {
+            fatalError("Window is not set for AppCoordinator. Please set the window property before calling start.")
+        }
+
+        navigationController = UINavigationController()
+        window.rootViewController = navigationController
+        window.makeKeyAndVisible()
+
         if FirebaseAuth.Auth.auth().currentUser != nil {
-            let tabBarCoordinator = TabBarControllerCoordinator(navigationController: navigationController)
+            let tabBarCoordinator = TabBarControllerCoordinator(navigationController: navigationController ?? UINavigationController())
             add(coorfinator: tabBarCoordinator)
             tabBarCoordinator.start()
 
         } else {
-            let authorizationViewContollerCoordinator = AuthorizationControllerCoordinator(navigationController: navigationController)
+            let authorizationViewContollerCoordinator = AuthorizationControllerCoordinator(navigationController: navigationController ?? UINavigationController())
             add(coorfinator: authorizationViewContollerCoordinator)
             authorizationViewContollerCoordinator.start()
         }

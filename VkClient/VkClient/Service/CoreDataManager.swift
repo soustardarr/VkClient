@@ -47,6 +47,7 @@ class CoreDataManager {
     func saveProfileInfo(with user: User) {
         let userCoreData = EntityUser(context: viewContext)
         userCoreData.name = user.name
+        userCoreData.profilePicture = user.profilePicture
         userCoreData.email = user.email
         userCoreData.safeEmail = user.safeEmail
         userCoreData.profilePictureFileName = user.profilePictureFileName

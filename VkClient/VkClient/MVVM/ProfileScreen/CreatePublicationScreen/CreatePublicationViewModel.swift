@@ -10,13 +10,11 @@ import UIKit
 
 class CreatePublicationViewModel {
 
-    func sendPublicationToFirebase(_ text: String, _ image: UIImage, _ user: User) {
+
+    func sendPublicationToFirebase(publication: Publication) {
 
         let formattedDate = getDate()
-        let publication = Publication(publiactionImageData: image.pngData(),
-                                      text: text,
-                                      date: formattedDate)
-
+       
         let queue = DispatchQueue.global()
         queue.async {
             StorageManager.shared.uploadImage(with: publication.publiactionImageData ?? Data(), fileName: publication.publiactionPictureFileName) { result in

@@ -110,6 +110,20 @@ extension StorageManager {
 
 extension StorageManager {
 
+    static func sortPublicationsByDate(publications: [Publication]) -> [Publication] {
+        let sortedPublications = publications.sorted { (publication1, publication2) -> Bool in
+            // Парсим дату публикации и сравниваем их
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "HH:mm dd.MM.yyyy"
+            if let date1 = dateFormatter.date(from: publication1.date),
+               let date2 = dateFormatter.date(from: publication2.date) {
+                return date1 > date2 // Здесь изменено на date1 > date2 для сортировки от новой к старой дате
+            }
+            return false
+        }
+        return sortedPublications
+    }
+
 
 
 }

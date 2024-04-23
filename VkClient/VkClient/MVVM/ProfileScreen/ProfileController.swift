@@ -10,18 +10,14 @@ import Combine
 
 class ProfileController: UIViewController {
 
-    
 
-    private var profileView: ProfileView?
+    private var profileView: NewsFeedTableView?
     private var headerView: HeaderView?
     private var cancellable: Set<AnyCancellable> = []
     private var profileViewModel: ProfileViewModel?
     private var user: User?
-
-
-    var array = ["публикация 1","публикация 2"]
-
-
+    private var publications: [Publication]?
+    private weak var createViewModel: CreatePublicationViewModel?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,32 +29,39 @@ class ProfileController: UIViewController {
         navigationController?.navigationBar.isHidden = true
     }
 
+    private func obtainCoreDataProfile() {
+        let user = CoreDataManager.shared.obtainSavedProfileInfo()
+        headerView?.avatarImageView.image = UIImage(data: user?.profilePicture ?? Data())
+        headerView?.nameLabel.text = user?.name
+        self.user = user
+
+    }
+
     private func setup() {
-        profileView = ProfileView()
+        profileView = NewsFeedTableView()
         view = profileView
-        profileView?.tableView.delegate = self
-        profileView?.tableView.dataSource = self
-        profileView?.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        profileView?.newsFeedTable.delegate = self
+        profileView?.newsFeedTable.dataSource = self
+        profileView?.newsFeedTable.register(NewsFeedTableViewCell.self, forCellReuseIdentifier: NewsFeedTableViewCell.reuseIdentifier)
         headerView = HeaderView()
         headerView?.delegate = self
-        setupProfileInfo()
+        obtainCoreDataProfile()
         profileViewModel = ProfileViewModel()
         obtainProfileFromFirebase()
     }
 
-    private func setupProfileInfo() {
-        RealTimeDataBaseManager.shared.$currentUser.sink { user in
-            self.headerView?.avatarImageView.image = UIImage(data: user?.profilePicture ?? Data())
-            self.headerView?.nameLabel.text = user?.name
-        }.store(in: &cancellable)
-    }
+
 
     private func obtainProfileFromFirebase() {
         profileViewModel?.getProfile(returnUser: { [ weak self ] user in
+            guard let strongSelf = self else { return }
             DispatchQueue.main.async {
-                self?.headerView?.avatarImageView.image = UIImage(data: user?.profilePicture ?? Data())
-                self?.headerView?.nameLabel.text = user?.name
-                self?.user = user
+                strongSelf.headerView?.avatarImageView.image = UIImage(data: user?.profilePicture ?? Data())
+                strongSelf.headerView?.nameLabel.text = user?.name
+                strongSelf.user = user
+                strongSelf.publications = user?.publiсations
+                strongSelf.profileView?.newsFeedTable.reloadData()
+                CoreDataManager.shared.saveProfileInfo(with: user ?? User(name: "", email: ""))
             }
         })
     }
@@ -70,20 +73,26 @@ extension ProfileController: UITableViewDataSource {
         260
     }
 
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        520
+    }
+
 
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return array.count
+        publications?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.backgroundColor = .clear
-        cell.textLabel?.text = array[indexPath.row]
-        return cell
+        let cell = tableView.dequeueReusableCell(withIdentifier: NewsFeedTableViewCell.reuseIdentifier, for: indexPath) as? NewsFeedTableViewCell
+        if let posts = publications {
+            cell?.configure(with: posts[indexPath.row])
+            return cell ?? UITableViewCell()
+        }
+        return UITableViewCell()
     }
 
 }
@@ -92,6 +101,7 @@ extension ProfileController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -113,6 +123,7 @@ extension ProfileController: HeaderViewDelegate {
 
     func didTappedCreatePublication() {
         let createPublicationVC = CreatePublicationController(user: user ?? nil)
+        createPublicationVC.delegate = self
         let navVC = UINavigationController(rootViewController: createPublicationVC)
         present(navVC, animated: true)
     }
@@ -126,7 +137,15 @@ extension ProfileController: HeaderViewDelegate {
         }))
         controller.addAction(UIAlertAction(title: "нет", style: .default))
         present(controller, animated: true)
+    }
+}
 
 
+extension ProfileController: CreatePublicationControllerDelegate {
+
+    func publicationHasBeenCreated(publication: Publication) {
+        publications?.append(publication)
+        publications = StorageManager.sortPublicationsByDate(publications: publications ?? [])
+        profileView?.newsFeedTable.reloadData()
     }
 }

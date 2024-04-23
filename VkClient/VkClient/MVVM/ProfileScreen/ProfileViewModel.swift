@@ -12,7 +12,7 @@ import UIKit
 class ProfileViewModel {
     
     func getProfile(returnUser: @escaping (User?) -> Void) {
-        RealTimeDataBaseManager.shared.getSelfProfileInfo { result in
+        RealTimeDataBaseManager.shared.getSelfProfileInfoWithPublications { result in
             switch result {
             case .success(let user):
                 returnUser(user)
@@ -20,6 +20,8 @@ class ProfileViewModel {
                 print("ошибка получения профиля\(error)")
             }
         }
+
+
     }
 
     func signOut() {
@@ -27,7 +29,7 @@ class ProfileViewModel {
         CoreDataManager.shared.deleteAllUsers()
         do {
             try FirebaseAuth.Auth.auth().signOut()
-
+            AppCoordinator.shared.start()
         } catch let error {
             print(error)
         }

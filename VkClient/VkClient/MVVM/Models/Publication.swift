@@ -24,5 +24,9 @@ struct Publication {
 
 struct Like {
     var count: Int?
-    var safeEmailWhoLikedIt: [String]?
+    var likedByCurrentUser: Bool
+    
+    mutating func toggleLiked() {
+        likedByCurrentUser.toggle()
+    }
 }

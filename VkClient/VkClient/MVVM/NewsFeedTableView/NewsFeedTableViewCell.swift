@@ -40,6 +40,7 @@ class NewsFeedTableViewCell: UITableViewCell {
         let colorConfig = UIImage.SymbolConfiguration(paletteColors: [.black])
         let handThumbsupImage = UIImage(systemName: "hand.thumbsup", withConfiguration: colorConfig)
         handThumbsupButton.image = handThumbsupImage
+        handThumbsupButton.isUserInteractionEnabled = true
         handThumbsupButton.translatesAutoresizingMaskIntoConstraints = false
         return handThumbsupButton
     }()
@@ -71,23 +72,74 @@ class NewsFeedTableViewCell: UITableViewCell {
         return text
     }()
 
+    lazy var countLikes: UILabel = {
+        let countLikes = UILabel()
+        countLikes.text = "0"
+        countLikes.textColor = .black
+        countLikes.font = UIFont.systemFont(ofSize: 20)
+        countLikes.translatesAutoresizingMaskIntoConstraints = false
+        return countLikes
+    }()
+
     func configure(with post: Publication) {
+        self.post = post
         avatarView.image = post.avatarImage
         nameLabel.text = post.name
         image.image = UIImage(data: post.publiactionImageData ?? Data())
         date.text = post.date
         text.text = post.text
+        let email = UserDefaults.standard.string(forKey: "email") ?? ""
+        let safeEmail = RealTimeDataBaseManager.safeEmail(emailAddress: email)
+        if post.like?.count != nil {
+            countLikes.text = String(post.like?.count ?? 0)
+        }
+        if post.like?.likedByCurrentUser == true {
+            let colorConfig = UIImage.SymbolConfiguration(paletteColors: [.red])
+            let handThumbsupImage = UIImage(systemName: "hand.thumbsup.fill", withConfiguration: colorConfig)
+            handThumbsupButton.image = handThumbsupImage
+        }
     }
+    var post: Publication?
 
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
+        addGesture()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+
+    private func addGesture() {
+        let gestureLike = UITapGestureRecognizer(target: self, action: #selector(didTapLike))
+        handThumbsupButton.addGestureRecognizer(gestureLike)
+    }
+
+    @objc private func didTapLike() {
+        guard var post = post else { return }
+        post.like?.toggleLiked()
+
+        let colorConfig: UIImage.SymbolConfiguration
+        if post.like?.likedByCurrentUser ?? false {
+            colorConfig = UIImage.SymbolConfiguration(paletteColors: [.red])
+            var cnt = Int(countLikes.text ?? "0") ?? 0
+            cnt += 1
+            countLikes.text = String(cnt)
+        } else {
+            colorConfig = UIImage.SymbolConfiguration(paletteColors: [.black])
+            var cnt = Int(countLikes.text ?? "1") ?? 1
+            cnt -= 1
+            countLikes.text = String(cnt)
+        }
+        let handThumbsupImage = UIImage(systemName: post.like?.likedByCurrentUser ?? false ? "hand.thumbsup.fill" : "hand.thumbsup", withConfiguration: colorConfig)
+        handThumbsupButton.image = handThumbsupImage
+
+    }
+
+
 
     func setupUI() {
         backgroundColor = .white
@@ -98,6 +150,7 @@ class NewsFeedTableViewCell: UITableViewCell {
         contentView.addSubview(handThumbsupButton)
         contentView.addSubview(paperplaneButton)
         contentView.addSubview(date)
+        contentView.addSubview(countLikes)
 
         NSLayoutConstraint.activate([
 
@@ -127,10 +180,13 @@ class NewsFeedTableViewCell: UITableViewCell {
             handThumbsupButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
             handThumbsupButton.topAnchor.constraint(equalTo: text.bottomAnchor, constant: 10),
 
+            countLikes.leadingAnchor.constraint(equalTo: handThumbsupButton.trailingAnchor, constant: 7),
+            countLikes.topAnchor.constraint(equalTo: text.bottomAnchor, constant: 11),
+
             paperplaneButton.heightAnchor.constraint(equalToConstant: 25),
             paperplaneButton.widthAnchor.constraint(equalToConstant: 25),
             paperplaneButton.topAnchor.constraint(equalTo: text.bottomAnchor, constant: 10),
-            paperplaneButton.leadingAnchor.constraint(equalTo: handThumbsupButton.trailingAnchor, constant: 15),
+            paperplaneButton.leadingAnchor.constraint(equalTo: handThumbsupButton.trailingAnchor, constant: 25),
 
         ])
     }

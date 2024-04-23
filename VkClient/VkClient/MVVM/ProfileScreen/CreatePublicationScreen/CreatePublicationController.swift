@@ -7,11 +7,17 @@
 
 import UIKit
 
+protocol CreatePublicationControllerDelegate: AnyObject {
+    func publicationHasBeenCreated(publication: Publication)
+}
+
 class CreatePublicationController: UIViewController, UINavigationControllerDelegate {
 
     private var createPublicationView: CreatePublicationView?
     private var viewModel: CreatePublicationViewModel?
     private var user: User?
+    weak var delegate: CreatePublicationControllerDelegate?
+
     init(user: User? = nil) {
         self.user = user
         super.init(nibName: nil, bundle: nil)
@@ -59,14 +65,26 @@ class CreatePublicationController: UIViewController, UINavigationControllerDeleg
         let text = createPublicationView?.textView.text
         let image = createPublicationView?.imagePublication.image
 
-        guard text != nil || image != nil else {
-            print("контента нет для публиакации")
+        guard let text = text, let image = image else {
+            presentAlertPublication()
             return
         }
-        viewModel?.sendPublicationToFirebase(text ?? "", image ?? UIImage(), user)
-        // ДОБАВЛЕНИЕ В ТАБЛИЦУ ПРОФИЛЯ
+
+        let formattedDate = viewModel?.getDate() ?? ""
+        let publication = Publication(avatarImage: UIImage(data: user.profilePicture ?? Data()), publiactionImageData: image.pngData(), name: user.name,
+                                      text: text,
+                                      date: formattedDate)
+        delegate?.publicationHasBeenCreated(publication: publication)
+        viewModel?.sendPublicationToFirebase(publication: publication)
         dismiss(animated: true)
 
+    }
+
+    private func presentAlertPublication() {
+        let action = UIAlertAction(title: "ок", style: .cancel)
+        let controller = UIAlertController(title: "Еще не все...", message: "заполни публикацию до конца)", preferredStyle: .alert)
+        controller.addAction(action)
+        present(controller, animated: true)
     }
 
 }
@@ -88,11 +106,9 @@ extension CreatePublicationController: UIImagePickerControllerDelegate {
                                            message: "сделать фото или выбрать из галереи",
                                            preferredStyle: .actionSheet)
         controller.addAction(UIAlertAction(title: "из галереи", style: .default, handler: { [ weak self ] _ in
-            self?.createPublicationView?.setImagePublication.isHidden = true
             self?.presentPicker()
         }))
         controller.addAction(UIAlertAction(title: "открыть камеру", style: .default, handler: { [ weak self ] _ in
-            self?.createPublicationView?.setImagePublication.isHidden = true
             self?.presentCamera()
         }))
         controller.addAction(UIAlertAction(title: "отмена", style: .cancel))
@@ -118,6 +134,7 @@ extension CreatePublicationController: UIImagePickerControllerDelegate {
         if let photo = info[.editedImage] as? UIImage {
             picker.dismiss(animated: true)
             self.createPublicationView?.addImageLayout()
+            self.createPublicationView?.setImagePublication.isHidden = true
             self.createPublicationView?.imagePublication.image = photo
         }
     }

@@ -29,7 +29,9 @@ class AuthorizationControllerCoordinator: BaseCoordinator {
     }
 
     func runTabBar() {
-        self.navigationController.navigationBar.isHidden = true
+        DispatchQueue.main.async {
+            self.navigationController.navigationBar.isHidden = true
+        }
         let tabBarControllerCoordinator = TabBarControllerCoordinator(navigationController: navigationController)
         add(coorfinator: tabBarControllerCoordinator)
         tabBarControllerCoordinator.start()

@@ -70,7 +70,7 @@ extension RealTimeDataBaseManager {
             print("UserDefaults ПУСТ ПУСТ ПУСТ")
             return
         }
-        let dispatchQueue = DispatchQueue.global(qos: .default)
+        let dispatchQueue = DispatchQueue(label: "getSelfProfileInfo")
         let group = DispatchGroup()
         let safeEmail = RealTimeDataBaseManager.safeEmail(emailAddress: email)
         var user = User(name: "", email: email)
@@ -81,7 +81,6 @@ extension RealTimeDataBaseManager {
             self.database.child(safeEmail).observeSingleEvent(of: .value) { snapshot in
                 if let userDict = snapshot.value as? [String: Any],
                    let userName = userDict["name"] as? String {
-                    print("\(Thread.current) записано имя!!!!")
                     user.name = userName
                     group.leave()
                 } else {
@@ -365,8 +364,7 @@ extension RealTimeDataBaseManager {
             }
     }
 
-    // метод большой, извиняюсь за эту глупость(я один понимаю что тут написано((( )
-    func obtainUserPublication(completion: @escaping (Result<[Publication], Error>) -> Void) {
+    func obtainNewsFeedPublications(completion: @escaping (Result<[Publication], Error>) -> Void) {
         let email = UserDefaults.standard.string(forKey: "email") ?? ""
         let safeEmail = RealTimeDataBaseManager.safeEmail(emailAddress: email)
         var friendEmails: [String] = []
@@ -457,8 +455,101 @@ extension RealTimeDataBaseManager {
     }
 
 
+    func getSelfProfileInfoWithPublications(completion: @escaping (Result<User, Error>) -> Void) {
+        RealTimeDataBaseManager.shared.getSelfProfileInfo { result in
+            switch result {
+            case .success(let user):
+                RealTimeDataBaseManager.shared.getProfilePublications(user: user) { posts in
+                    var profileInfo = user
+                    profileInfo.publiсations = posts
+                    completion(.success(profileInfo))
+                }
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
 
+    func getProfilePublications(user: User, completion: @escaping ([Publication]) -> Void) {
+
+        let queue = DispatchQueue(label: "getProfilePublications")
+        let group = DispatchGroup()
+        var publications: [Publication] = []
+        var completionPublications: [Publication] = []
+
+
+        let workItem = DispatchWorkItem {
+            self.database.child(user.safeEmail).child("publications").observeSingleEvent(of: .value) { snapshot in
+                if let publicationsDict = snapshot.value as? [String: Any] {
+                    for (_, value) in publicationsDict {
+                        if let publicationDict = value as? [String: Any] {
+                            let idString = publicationDict["id"] as? String
+                            let id = UUID(uuidString: idString ?? "")
+                            let text = publicationDict["text"] as? String
+                            let date = publicationDict["date"] as? String
+                            let publication = Publication(id: id ?? UUID(), text: text ?? "", date: date ?? "")
+                            publications.append(publication)
+                        }
+                    }
+                } else {
+                    print("не удалось найти фото")
+                    return
+                }
+                group.leave()
+            }
+        }
+        group.enter()
+        queue.async(execute: workItem)
+        group.wait()
+        group.notify(queue: queue) {
+            for publication in publications {
+                StorageManager.shared.downloadImage(publication.publiactionPictureFileName) { result in
+                    switch result {
+                    case .success(let data):
+                        let post = Publication(id: publication.id,
+                                               avatarImage: UIImage(data: user.profilePicture ?? Data()),
+                                               publiactionImageData: data,
+                                               name: user.name,
+                                               text: publication.text,
+                                               date: publication.date)
+                        completionPublications.append(post)
+                        if completionPublications.count == publications.count {
+                            let completionPublications = StorageManager.sortPublicationsByDate(publications: completionPublications)
+                            completion(completionPublications)
+                        }
+                    case .failure(let error):
+                        print("\(error)")
+                    }
+                }
+            }
+
+        }
+    }
+}
+
+
+// MARK: - set publication
+
+
+extension RealTimeDataBaseManager {
+
+    func setLike(uuid: String, post: Publication) {
+
+        database.child()
+            .child("subscriptions")
+            .observeSingleEvent(of: .value) { [ weak self ] snapshot in
+                guard let strongSelf = self else { return }
+                if var subscriptions = snapshot.value as? [String] {
+                    print(subscriptions)
+                    subscriptions.removeAll(where: { $0 == currentUser.safeEmail})
+                    strongSelf.database
+                        .child(selfSafeEmail)
+                        .child("subscriptions").setValue(subscriptions)
+                }
+            }
+
+
+    }
 
 
 }
-
