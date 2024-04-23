@@ -48,12 +48,13 @@ class ProfileController: UIViewController {
         obtainCoreDataProfile()
         profileViewModel = ProfileViewModel()
         obtainProfileFromFirebase()
+        obtainProfileFromFirebaseWithPublications()
     }
 
 
 
-    private func obtainProfileFromFirebase() {
-        profileViewModel?.getProfile(returnUser: { [ weak self ] user in
+    private func obtainProfileFromFirebaseWithPublications() {
+        profileViewModel?.getProfileWithPosts(returnUser: { [ weak self ] user in
             guard let strongSelf = self else { return }
             DispatchQueue.main.async {
                 strongSelf.headerView?.avatarImageView.image = UIImage(data: user?.profilePicture ?? Data())
@@ -61,6 +62,18 @@ class ProfileController: UIViewController {
                 strongSelf.user = user
                 strongSelf.publications = user?.publiсations
                 strongSelf.profileView?.newsFeedTable.reloadData()
+                CoreDataManager.shared.saveProfileInfo(with: user ?? User(name: "", email: ""))
+            }
+        })
+
+    }
+    private func obtainProfileFromFirebase() {
+        profileViewModel?.getProfile(returnUser: { [ weak self ] user in
+            guard let strongSelf = self else { return }
+            DispatchQueue.main.async {
+                strongSelf.headerView?.avatarImageView.image = UIImage(data: user?.profilePicture ?? Data())
+                strongSelf.headerView?.nameLabel.text = user?.name
+                strongSelf.user = user
                 CoreDataManager.shared.saveProfileInfo(with: user ?? User(name: "", email: ""))
             }
         })

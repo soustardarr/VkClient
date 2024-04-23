@@ -74,8 +74,6 @@ extension RealTimeDataBaseManager {
         let group = DispatchGroup()
         let safeEmail = RealTimeDataBaseManager.safeEmail(emailAddress: email)
         var user = User(name: "", email: email)
-
-
         let observeSingleSnapshot = DispatchWorkItem {
             group.enter()
             self.database.child(safeEmail).observeSingleEvent(of: .value) { snapshot in
@@ -470,7 +468,7 @@ extension RealTimeDataBaseManager {
         }
     }
 
-    func getProfilePublications(user: User, completion: @escaping ([Publication]) -> Void) {
+    func getProfilePublications(user: User, completion: @escaping ([Publication]?) -> Void) {
 
         let queue = DispatchQueue(label: "getProfilePublications")
         let group = DispatchGroup()
@@ -528,28 +526,4 @@ extension RealTimeDataBaseManager {
 }
 
 
-// MARK: - set publication
 
-
-extension RealTimeDataBaseManager {
-
-    func setLike(uuid: String, post: Publication) {
-
-        database.child()
-            .child("subscriptions")
-            .observeSingleEvent(of: .value) { [ weak self ] snapshot in
-                guard let strongSelf = self else { return }
-                if var subscriptions = snapshot.value as? [String] {
-                    print(subscriptions)
-                    subscriptions.removeAll(where: { $0 == currentUser.safeEmail})
-                    strongSelf.database
-                        .child(selfSafeEmail)
-                        .child("subscriptions").setValue(subscriptions)
-                }
-            }
-
-
-    }
-
-
-}

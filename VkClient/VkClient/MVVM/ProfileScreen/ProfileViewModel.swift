@@ -11,7 +11,7 @@ import UIKit
 
 class ProfileViewModel {
     
-    func getProfile(returnUser: @escaping (User?) -> Void) {
+    func getProfileWithPosts(returnUser: @escaping (User?) -> Void) {
         RealTimeDataBaseManager.shared.getSelfProfileInfoWithPublications { result in
             switch result {
             case .success(let user):
@@ -23,6 +23,21 @@ class ProfileViewModel {
 
 
     }
+
+    func getProfile(returnUser: @escaping (User?) -> Void) {
+        RealTimeDataBaseManager.shared.getSelfProfileInfo { result in
+            switch result {
+            case .success(let user):
+                returnUser(user)
+            case .failure(let error):
+                print("ошибка получения профиля\(error)")
+            }
+        }
+
+
+    }
+//
+//    getSelfProfileInfo
 
     func signOut() {
         UserDefaults.standard.removeObject(forKey: "email")
