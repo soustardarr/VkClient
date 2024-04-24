@@ -108,6 +108,28 @@ extension RealTimeDataBaseManager {
 
     }
 
+    public func getProfileInfo(completionHandler: @escaping (User?) -> ()) {
+        guard let email = UserDefaults.standard.string(forKey: "email") else {
+            print("UserDefaults ПУСТ ПУСТ ПУСТ")
+            completionHandler(nil)
+            return
+        }
+        let safeEmail = RealTimeDataBaseManager.safeEmail(emailAddress: email)
+        database.child(safeEmail).observeSingleEvent(of: .value) { snapshot in
+            if let userDict = snapshot.value as? [String: Any],
+               let userName = userDict["name"] as? String {
+                StorageManager.shared.downloadAvatarDataSelfProfile()
+                StorageManager.shared.getAvatarData = { data in
+                    let user = User(name: userName, email: email, profilePicture: data)
+                    completionHandler(user)
+                }
+            } else {
+                print("Неизвестный формат снимка данных")
+                completionHandler(nil)
+            }
+        }
+    }
+
 
     //MARK: ПОЛУЧЕНИЕ ВСЕХ ЮЗЕРОВ
     func getAllUsers(completion: @escaping (Result<[User], Error>) -> ()) {
@@ -171,7 +193,24 @@ extension RealTimeDataBaseManager {
                         let returnUser = User(name: name, email: email, profilePicture: data, friends: friends, followers: followers, subscriptions: subscriptions, publiсations: publications)
                         completionHandler(.success(returnUser))
                     case .failure(let error):
-                        completionHandler(.failure(error))
+                        let returnUser = User(name: name, email: email, friends: friends, followers: followers, subscriptions: subscriptions)
+                        completionHandler(.success(returnUser))                    }
+                }
+            } else if let userDict = snapshot.value as? [String: Any],
+                      let name = userDict["name"] as? String,
+                      let profilePictureFileName = userDict["profilePictureFileName"] as? String,
+                      let email = userDict["email"] as? String,
+                      let friends = userDict["friends"] as? [String],
+                      let followers = userDict["followers"] as? [String],
+                      let subscriptions = userDict["subscriptions"] as? [String] {
+                StorageManager.shared.downloadImage(profilePictureFileName) { result in
+                    switch result {
+                    case .success(let data):
+                        let returnUser = User(name: name, email: email, profilePicture: data, friends: friends, followers: followers, subscriptions: subscriptions)
+                        completionHandler(.success(returnUser))
+                    case .failure(let error):
+                        let returnUser = User(name: name, email: email, friends: friends, followers: followers, subscriptions: subscriptions)
+                        completionHandler(.success(returnUser))
                     }
                 }
             } else {

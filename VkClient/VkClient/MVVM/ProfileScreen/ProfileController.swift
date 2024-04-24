@@ -45,38 +45,48 @@ class ProfileController: UIViewController {
         profileView?.newsFeedTable.register(NewsFeedTableViewCell.self, forCellReuseIdentifier: NewsFeedTableViewCell.reuseIdentifier)
         headerView = HeaderView()
         headerView?.delegate = self
+        obtainOnlyProfileInfo()
         obtainCoreDataProfile()
         profileViewModel = ProfileViewModel()
-        obtainProfileFromFirebase()
         obtainProfileFromFirebaseWithPublications()
     }
 
 
 
     private func obtainProfileFromFirebaseWithPublications() {
-        profileViewModel?.getProfileWithPosts(returnUser: { [ weak self ] user in
-            guard let strongSelf = self else { return }
-            DispatchQueue.main.async {
-                strongSelf.headerView?.avatarImageView.image = UIImage(data: user?.profilePicture ?? Data())
-                strongSelf.headerView?.nameLabel.text = user?.name
-                strongSelf.user = user
-                strongSelf.publications = user?.publiсations
-                strongSelf.profileView?.newsFeedTable.reloadData()
-                CoreDataManager.shared.saveProfileInfo(with: user ?? User(name: "", email: ""))
-            }
-        })
 
-    }
-    private func obtainProfileFromFirebase() {
-        profileViewModel?.getProfile(returnUser: { [ weak self ] user in
-            guard let strongSelf = self else { return }
-            DispatchQueue.main.async {
-                strongSelf.headerView?.avatarImageView.image = UIImage(data: user?.profilePicture ?? Data())
-                strongSelf.headerView?.nameLabel.text = user?.name
-                strongSelf.user = user
-                CoreDataManager.shared.saveProfileInfo(with: user ?? User(name: "", email: ""))
+        RealTimeDataBaseManager.shared.getSelfProfileInfoWithPublications { result in
+            switch result {
+            case .success(let user):
+                DispatchQueue.main.async {
+                    self.headerView?.avatarImageView.image = UIImage(data: user.profilePicture ?? Data())
+                    self.headerView?.nameLabel.text = user.name
+                    self.user = user
+                    self.publications = user.publiсations
+                    self.profileView?.newsFeedTable.reloadData()
+                    CoreDataManager.shared.saveProfileInfo(with: user)
+                }
+            case .failure(let error):
+                print("ошибка получения профиля\(error)")
             }
-        })
+        }
+    }
+
+
+    private func obtainOnlyProfileInfo() {
+        RealTimeDataBaseManager.shared.getProfileInfo { user in
+            guard let info = user else {
+                print("error obtainOnlyProfileInfo")
+                return
+            }
+            DispatchQueue.main.async {
+                self.headerView?.avatarImageView.image = UIImage(data: info.profilePicture ?? Data())
+                self.headerView?.nameLabel.text = info.name
+                self.user = info
+                CoreDataManager.shared.saveProfileInfo(with: info)
+            }
+        }
+
     }
 
 }

@@ -56,7 +56,9 @@ extension StorageManager {
         let safeEmail = RealTimeDataBaseManager.safeEmail(emailAddress: email)
         let fileName = safeEmail + "_profile_picture.png"
 
+
         let path = "images/" + fileName
+        print(path)
 
         getDownloadUrl(for: path) { result in
             switch result {
@@ -70,6 +72,27 @@ extension StorageManager {
             case .failure(let error):
                 completion(false)
                 print("не удалось найти ссылку на скачивание, Error: \(error)")
+            }
+
+        }
+    }
+
+    func downloadAvatarDataSelfProfile() {
+        guard let email = UserDefaults.standard.value(forKey: "email") as? String else { return }
+        let safeEmail = RealTimeDataBaseManager.safeEmail(emailAddress: email)
+        let fileName = safeEmail + "_profile_picture.png"
+
+        let path = "images/" + fileName
+
+        getDownloadUrl(for: path) { result in
+            switch result {
+            case .success(let url):
+                URLSession.shared.dataTask(with: url) { data, _, error in
+                    guard let data = data, error == nil else { return }
+                    self.avatarData = data
+                }.resume()
+            case .failure(let error):
+                print("jbfgskdbgdkfbgkdfjkbgjdfbgd \(error)")
             }
 
         }
